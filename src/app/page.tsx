@@ -13,9 +13,9 @@ const structuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'LocalBusiness',
 	name: 'ПЛАТФОРМА - Качественный ремонт квартир',
-	image: 'https://rehomekz.vercel.app/assets/case1_ph2.webp',
-	'@id': 'https://rehomekz.vercel.app',
-	url: 'https://rehomekz.vercel.app',
+	image: 'https://platformkz.vercel.app/assets/case1_ph2.webp',
+	'@id': 'https://platformkz.vercel.app',
+	url: 'https://platformkz.vercel.app',
 	telephone: '+7-905-310-45-08',
 	address: {
 		'@type': 'PostalAddress',
@@ -101,7 +101,7 @@ export default function Home() {
 				<meta name='geo.placename' content='Москва' />
 				<meta name='geo.position' content='55.6781;37.5587' />
 				<meta name='ICBM' content='55.6781, 37.5587' />
-				<link rel='canonical' href='https://rehomekz.vercel.app' />
+				<link rel='canonical' href='https://platformkz.vercel.app' />
 			</Head>
 			<div
 				className='min-h-screen bg-black text-white overflow-x-hidden'
@@ -123,7 +123,7 @@ export default function Home() {
 					<div className='absolute inset-0'>
 						<Image
 							src='/assets/case1_ph2.webp'
-							alt='Дизайн интерьера квартиры в Казани - современный ремонт от REHOME'
+							alt='Дизайн интерьера квартиры в Казани - современный ремонт от PLATFORM'
 							fill
 							className='object-cover'
 							priority
@@ -358,7 +358,7 @@ export default function Home() {
 								А что если сделать ремонт правильно?
 							</h3>
 							<p className='text-lg text-white/80 leading-relaxed mb-4'>
-								Студия REHOME контролирует весь процесс ремонта
+								Студия PLATFORM контролирует весь процесс ремонта
 							</p>
 							<p className='text-base text-white/60 leading-relaxed max-w-2xl mx-auto'>
 								Мы не просто рисуем проекты, а воплощаем их в жизнь с гарантией
@@ -492,7 +492,7 @@ export default function Home() {
 									</div>
 									<div className='space-y-4'>
 										<h4 className='text-lg font-medium text-green-300 mb-3'>
-											✅ Ремонт REHOME:
+											✅ Ремонт PLATFORM:
 										</h4>
 										<ul className='space-y-2 text-white/70 text-sm'>
 											<li>• Качественные материалы и работы</li>
@@ -655,7 +655,7 @@ export default function Home() {
 												<br />И РЕМОНТЕ КВАРТИР
 											</p>
 											<div className='text-xs text-white/60 font-light'>
-												REHOME STUDIO
+												PLATFORM STUDIO
 											</div>
 										</div>
 									</div>
@@ -906,7 +906,7 @@ export default function Home() {
 									viewport={{ once: true }}
 								>
 									<a
-										href='/assets/rehome_договор.docx'
+										href='/assets/platform_договор.docx'
 										download
 										className='inline-flex items-center text-white/80 hover:text-white transition-colors group'
 									>

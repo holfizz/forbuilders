@@ -104,10 +104,10 @@ export default function Privacy() {
 									ко всей информации, которую Оператор может получить о
 									посетителях веб-сайта{' '}
 									<a
-										href='https://rehomekz.vercel.app/'
+										href='https://platformkz.vercel.app/'
 										className='text-blue-400 hover:text-blue-300'
 									>
-										https://rehomekz.vercel.app/
+										https://platformkz.vercel.app/
 									</a>
 									.
 								</p>
@@ -136,10 +136,10 @@ export default function Privacy() {
 										данных, обеспечивающих их доступность в сети интернет по
 										сетевому адресу{' '}
 										<a
-											href='https://rehomekz.vercel.app/'
+											href='https://platformkz.vercel.app/'
 											className='text-blue-400 hover:text-blue-300'
 										>
-											https://rehomekz.vercel.app/
+											https://platformkz.vercel.app/
 										</a>
 										.
 									</p>
@@ -160,10 +160,10 @@ export default function Privacy() {
 										<strong>2.10.</strong> Пользователь — любой посетитель
 										веб-сайта{' '}
 										<a
-											href='https://rehomekz.vercel.app/'
+											href='https://platformkz.vercel.app/'
 											className='text-blue-400 hover:text-blue-300'
 										>
-											https://rehomekz.vercel.app/
+											https://platformkz.vercel.app/
 										</a>
 										.
 									</p>
@@ -339,10 +339,10 @@ export default function Privacy() {
 										<strong>12.3.</strong> Актуальная версия Политики в
 										свободном доступе расположена в сети Интернет по адресу{' '}
 										<a
-											href='https://rehomekz.vercel.app/privacy'
+											href='https://platformkz.vercel.app/privacy'
 											className='text-blue-400 hover:text-blue-300'
 										>
-											https://rehomekz.vercel.app/privacy
+											https://platformkz.vercel.app/privacy
 										</a>
 										.
 									</p>

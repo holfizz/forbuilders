@@ -15,9 +15,9 @@ export const metadata: Metadata = {
 	publisher: 'ООО «ПЛАТФОРМА»',
 	robots: 'index, follow',
 	viewport: 'width=device-width, initial-scale=1',
-	metadataBase: new URL('https://rehomekz.vercel.app'),
+	metadataBase: new URL('https://platformkz.vercel.app'),
 	alternates: {
-		canonical: 'https://rehomekz.vercel.app',
+		canonical: 'https://platformkz.vercel.app',
 	},
 	manifest: '/manifest.json',
 	icons: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
 	openGraph: {
 		type: 'website',
 		locale: 'ru_RU',
-		url: 'https://rehomekz.vercel.app',
+		url: 'https://platformkz.vercel.app',
 		title: 'ПЛАТФОРМА - Качественный ремонт квартир в Казани',
 		description:
 			'Компания ПЛАТФОРМА выполняет качественный ремонт квартир в Казани. Ремонт под ключ с гарантией качества и соблюдением сроков. Звоните: +7 (905) 310-45-08',

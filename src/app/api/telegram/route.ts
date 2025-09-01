@@ -79,13 +79,13 @@ export async function POST(request: NextRequest) {
 		const formattedContact = formatContact(contact, method)
 
 		// Формируем простое сообщение для Telegram
-		const message = `🏠 НОВАЯ ЗАЯВКА С САЙТА REHOME
+		const message = `🏠 НОВАЯ ЗАЯВКА С САЙТА PLATFORM
 
 ${methodInfo.emoji} Способ связи: ${methodInfo.icon} ${methodInfo.name}
 📝 Контакт: ${formattedContact}
 
 🕐 Время заявки: ${timestamp}
-🌐 Источник: Сайт REHOME
+🌐 Источник: Сайт PLATFORM
 `
 
 		console.log('Sending message:', message)

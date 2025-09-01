@@ -58,10 +58,10 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 							<div
 								className={`w-10 h-10 ${classes.logo} backdrop-blur-xl rounded-xl flex items-center justify-center border`}
 							>
-								<span className='font-light text-lg'>R</span>
+								<span className='font-light text-lg'>П</span>
 							</div>
 							<span className={`text-2xl font-extralight ${classes.text}`}>
-								REHOME
+								ПЛАТФОРМА
 							</span>
 						</div>
 						<p
@@ -85,7 +85,7 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 						</h3>
 						<div className='space-y-3'>
 							<a
-								href='tel:+79274394355'
+								href='tel:+79053104508'
 								className={`flex items-center space-x-3 ${classes.link} transition-colors group`}
 							>
 								<div
@@ -93,10 +93,10 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 								>
 									<span className='text-sm'>📞</span>
 								</div>
-								<span className='text-sm'>+7 (927) 439-43-55</span>
+								<span className='text-sm'>+7 (905) 310-45-08</span>
 							</a>
 							<a
-								href='https://t.me/m_ilya31'
+								href='https://t.me/alakhmetov5'
 								target='_blank'
 								rel='noopener noreferrer'
 								className={`flex items-center space-x-3 ${classes.link} transition-colors group`}
@@ -106,10 +106,10 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 								>
 									<span className='text-sm'>✈️</span>
 								</div>
-								<span className='text-sm'>@m_ilya31</span>
+								<span className='text-sm'>@alakhmetov5</span>
 							</a>
 							<a
-								href='https://wa.me/79274394355'
+								href='https://wa.me/79053104508'
 								target='_blank'
 								rel='noopener noreferrer'
 								className={`flex items-center space-x-3 ${classes.link} transition-colors group`}
@@ -122,30 +122,15 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 								<span className='text-sm'>WhatsApp</span>
 							</a>
 							<a
-								href='https://vk.com/rehomekz'
-								target='_blank'
-								rel='noopener noreferrer'
+								href='mailto:Platforma.construction.company@gmail.com'
 								className={`flex items-center space-x-3 ${classes.link} transition-colors group`}
 							>
 								<div
 									className={`w-8 h-8 ${classes.icon} rounded-lg flex items-center justify-center border transition-all`}
 								>
-									<span className='text-sm'>🔵</span>
+									<span className='text-sm'>📧</span>
 								</div>
-								<span className='text-sm'>VKontakte</span>
-							</a>
-							<a
-								href='https://t.me/rehomekz'
-								target='_blank'
-								rel='noopener noreferrer'
-								className={`flex items-center space-x-3 ${classes.link} transition-colors group`}
-							>
-								<div
-									className={`w-8 h-8 ${classes.icon} rounded-lg flex items-center justify-center border transition-all`}
-								>
-									<span className='text-sm'>📢</span>
-								</div>
-								<span className='text-sm'>Telegram канал</span>
+								<span className='text-sm'>Email</span>
 							</a>
 						</div>
 					</motion.div>
@@ -168,7 +153,7 @@ export default function Footer({ theme = 'dark' }: FooterProps) {
 					<p
 						className={`text-sm ${classes.textSecondary} text-center md:text-left`}
 					>
-						© 2025 REHOME. Все права защищены.
+						© 2025 ООО «ПЛАТФОРМА». Все права защищены.
 					</p>
 					<div className='flex flex-wrap items-center justify-center md:justify-end gap-3 md:gap-6'>
 						<Link

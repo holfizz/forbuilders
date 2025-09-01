@@ -466,7 +466,7 @@ export default function Services() {
 								Заказать ремонт
 							</motion.a>
 							<motion.a
-								href='https://t.me/m_ilya31'
+								href='https://t.me/alakhmetov5'
 								target='_blank'
 								rel='noopener noreferrer'
 								whileHover={{ scale: 1.02, y: -2 }}

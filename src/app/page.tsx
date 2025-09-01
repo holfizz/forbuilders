@@ -4,7 +4,7 @@ import { motion } from 'framer-motion'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import Footer from '../components/Footer'
 import Header from '../components/Header'
 
@@ -12,11 +12,11 @@ import Header from '../components/Header'
 const structuredData = {
 	'@context': 'https://schema.org',
 	'@type': 'LocalBusiness',
-	name: 'REHOME - Студия дизайна интерьера',
+	name: 'ПЛАТФОРМА - Качественный ремонт квартир',
 	image: 'https://rehomekz.vercel.app/assets/case1_ph2.webp',
 	'@id': 'https://rehomekz.vercel.app',
 	url: 'https://rehomekz.vercel.app',
-	telephone: '+7-927-439-43-55',
+	telephone: '+7-905-310-45-08',
 	address: {
 		'@type': 'PostalAddress',
 		streetAddress: 'Нахимовский пр-т, 56',
@@ -43,11 +43,11 @@ const structuredData = {
 		opens: '09:00',
 		closes: '20:00',
 	},
-	sameAs: ['https://t.me/m_ilya31', 'https://wa.me/79274394355'],
+	sameAs: ['https://t.me/alakhmetov5', 'https://wa.me/79053104508'],
 	priceRange: '₽₽₽',
 	servedCuisine: ['Interior Design', 'Home Renovation'],
 	description:
-		'Профессиональный дизайн интерьера и ремонт квартир. Офис в Москве, проекты в Казани. Студия REHOME создает уникальные интерьеры с индивидуальным подходом.',
+		'Качественный ремонт квартир под ключ в Казани. Компания ПЛАТФОРМА выполняет профессиональный ремонт с гарантией качества.',
 	areaServed: [
 		{
 			'@type': 'City',
@@ -81,8 +81,8 @@ const structuredData = {
 		],
 	},
 	founder: {
-		'@type': 'Person',
-		name: 'Макаров Илья Дмитриевич',
+		'@type': 'Organization',
+		name: 'ООО «ПЛАТФОРМА»',
 	},
 }
 
@@ -90,187 +90,7 @@ export default function Home() {
 	// Chat widget state
 	const [isChatOpen, setIsChatOpen] = useState(false)
 
-	// Contact form state
-	const [selectedMethod, setSelectedMethod] = useState('')
-	const [contactInfo, setContactInfo] = useState('')
-	const [showConfetti, setShowConfetti] = useState(false)
-	const [isSubmitted, setIsSubmitted] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
-	const [error, setError] = useState('')
-	const inputRef = useRef<HTMLInputElement>(null)
 
-	useEffect(() => {
-		if (selectedMethod && inputRef.current) {
-			setTimeout(() => {
-				inputRef.current?.focus()
-			}, 300)
-		}
-	}, [selectedMethod])
-
-	useEffect(() => {
-		if (
-			(selectedMethod === 'phone' || selectedMethod === 'whatsapp') &&
-			!contactInfo
-		) {
-			setContactInfo('+7 ')
-		} else if (selectedMethod === 'telegram' && contactInfo === '+7 ') {
-			setContactInfo('')
-		}
-	}, [selectedMethod, contactInfo])
-
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault()
-		if (!selectedMethod || !contactInfo) return
-
-		const validationError = validateContact(contactInfo, selectedMethod)
-		if (validationError) {
-			setError(validationError)
-			return
-		}
-
-		setIsLoading(true)
-		setError('')
-
-		try {
-			const response = await fetch('/api/telegram', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify({
-					method: selectedMethod,
-					contact: contactInfo,
-				}),
-			})
-
-			if (response.ok) {
-				setShowConfetti(true)
-				setIsSubmitted(true)
-
-				setTimeout(() => {
-					setShowConfetti(false)
-				}, 3000)
-
-				setTimeout(() => {
-					setIsSubmitted(false)
-					setSelectedMethod('')
-					setContactInfo('')
-				}, 5000)
-			} else {
-				const errorData = await response.json()
-				setError(errorData.error || 'Произошла ошибка при отправке')
-			}
-		} catch (error) {
-			console.error('Error submitting form:', error)
-			setError('Ошибка сети. Попробуйте еще раз.')
-		} finally {
-			setIsLoading(false)
-		}
-	}
-
-	const getInputPlaceholder = () => {
-		switch (selectedMethod) {
-			case 'whatsapp':
-				return '+7 999 999-99-99'
-			case 'telegram':
-				return '@username или +7 999 999-99-99'
-			case 'phone':
-				return '+7 999 999-99-99'
-			default:
-				return 'Выберите способ связи'
-		}
-	}
-
-	const getInputLabel = () => {
-		switch (selectedMethod) {
-			case 'whatsapp':
-				return 'Ваш номер WhatsApp'
-			case 'telegram':
-				return 'Ваш Telegram'
-			case 'phone':
-				return 'Ваш номер телефона'
-			default:
-				return 'Контактная информация'
-		}
-	}
-
-	const validateContact = (contact: string, method: string) => {
-		if (!contact.trim()) return 'Поле не может быть пустым'
-
-		if (method === 'phone' || method === 'whatsapp') {
-			const digitsOnly = contact.replace(/\D/g, '')
-			if (digitsOnly.length !== 11 || !digitsOnly.startsWith('7')) {
-				return 'Введите корректный номер телефона'
-			}
-		}
-
-		if (method === 'telegram') {
-			const telegramRegex =
-				/^(@[a-zA-Z0-9_]{5,32}|(\+7|7)\s?\d{3}\s?\d{3}-?\d{2}-?\d{2})$/
-			if (!telegramRegex.test(contact.replace(/[\s\-]/g, ''))) {
-				return 'Введите @username или номер телефона'
-			}
-		}
-
-		return null
-	}
-
-	const formatPhoneNumber = (value: string) => {
-		const digits = value.replace(/\D/g, '')
-		let formattedDigits = digits
-		if (digits.startsWith('8')) {
-			formattedDigits = '7' + digits.slice(1)
-		}
-		if (formattedDigits && !formattedDigits.startsWith('7')) {
-			formattedDigits = '7' + formattedDigits
-		}
-		formattedDigits = formattedDigits.slice(0, 11)
-
-		if (formattedDigits.length >= 1) {
-			let formatted = '+7'
-			if (formattedDigits.length > 1) {
-				formatted += ' ' + formattedDigits.slice(1, 4)
-			}
-			if (formattedDigits.length > 4) {
-				formatted += ' ' + formattedDigits.slice(4, 7)
-			}
-			if (formattedDigits.length > 7) {
-				formatted += '-' + formattedDigits.slice(7, 9)
-			}
-			if (formattedDigits.length > 9) {
-				formatted += '-' + formattedDigits.slice(9, 11)
-			}
-			return formatted
-		}
-
-		return '+7 '
-	}
-
-	const handleContactChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let value = e.target.value
-
-		if (selectedMethod === 'phone' || selectedMethod === 'whatsapp') {
-			value = formatPhoneNumber(value)
-		}
-
-		setContactInfo(value)
-		if (error) setError('')
-	}
-
-	const renderInput = () => {
-		return (
-			<input
-				type='text'
-				value={contactInfo}
-				onChange={handleContactChange}
-				placeholder={getInputPlaceholder()}
-				className='w-full px-6 md:px-8 py-4 md:py-5 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl md:rounded-3xl text-white placeholder-white/50 focus:border-white/40 focus:outline-none transition-all text-sm md:text-base'
-				required
-				disabled={isLoading}
-				ref={inputRef}
-			/>
-		)
-	}
 
 	return (
 		<>
@@ -292,49 +112,7 @@ export default function Home() {
 					overflowY: 'auto',
 				}}
 			>
-				{/* Confetti Animation */}
-				{showConfetti && (
-					<div className='fixed inset-0 z-50 pointer-events-none'>
-						{[...Array(50)].map((_, i) => (
-							<motion.div
-								key={i}
-								initial={{
-									opacity: 1,
-									y: -100,
-									x:
-										typeof window !== 'undefined'
-											? Math.random() * window.innerWidth
-											: Math.random() * 1200,
-									rotate: 0,
-									scale: 1,
-								}}
-								animate={{
-									opacity: 0,
-									y:
-										typeof window !== 'undefined'
-											? window.innerHeight + 100
-											: 800,
-									rotate: 360,
-									scale: 0,
-								}}
-								transition={{
-									duration: 3,
-									delay: Math.random() * 0.5,
-									ease: 'easeOut',
-								}}
-								className={`absolute w-3 h-3 ${
-									[
-										'bg-yellow-400',
-										'bg-pink-400',
-										'bg-blue-400',
-										'bg-green-400',
-										'bg-purple-400',
-									][i % 5]
-								} rounded-full`}
-							/>
-						))}
-					</div>
-				)}
+
 
 				<Header />
 
@@ -1023,126 +801,60 @@ export default function Home() {
 						</motion.div>
 
 						<div className='grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto'>
-							{/* Contact Form */}
+							{/* Contact Phone */}
 							<motion.div
 								initial={{ opacity: 0, x: -40 }}
 								whileInView={{ opacity: 1, x: 0 }}
 								transition={{ duration: 0.8 }}
 								viewport={{ once: true }}
-								className='bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/20 p-8 shadow-[0_8px_32px_rgba(255,255,255,0.1)]'
+								className='bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/20 p-8 md:p-12 shadow-[0_8px_32px_rgba(255,255,255,0.1)] text-center'
 							>
-								{isSubmitted ? (
-									<motion.div
-										initial={{ opacity: 0, scale: 0.8 }}
-										animate={{ opacity: 1, scale: 1 }}
-										className='text-center py-8'
+								<div className='w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-8 mx-auto shadow-lg'>
+									<span className='text-3xl font-light text-white'>
+										📞
+									</span>
+								</div>
+
+								<h3 className='text-2xl md:text-3xl font-light mb-6 text-white'>
+									Звоните прямо сейчас
+								</h3>
+								
+								<div className='mb-8'>
+									<motion.a
+										href='tel:+79053104508'
+										whileHover={{ scale: 1.02, y: -2 }}
+										whileTap={{ scale: 0.98 }}
+										className='text-3xl md:text-4xl font-light text-white hover:text-green-300 transition-colors block mb-4'
 									>
-										<div className='w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6'>
-											<span className='text-2xl'>✅</span>
-										</div>
-										<h3 className='text-xl font-light mb-4 text-white'>
-											Спасибо за обращение!
-										</h3>
-										<p className='text-white/70 text-sm'>
-											Мы получили вашу заявку и свяжемся с вами в ближайшее
-											время
-										</p>
-									</motion.div>
-								) : (
-									<form onSubmit={handleSubmit} className='space-y-6'>
-										<div>
-											<h3 className='text-xl font-light mb-6 text-white text-center'>
-												Как с вами связаться?
-											</h3>
-											<div className='grid grid-cols-1 sm:grid-cols-3 gap-4'>
-												{[
-													{
-														id: 'whatsapp',
-														label: 'WhatsApp',
-														icon: '📱',
-														color: 'from-green-500/20 to-green-600/20',
-													},
-													{
-														id: 'telegram',
-														label: 'Telegram',
-														icon: '✈️',
-														color: 'from-blue-500/20 to-blue-600/20',
-													},
-													{
-														id: 'phone',
-														label: 'Телефон',
-														icon: '📞',
-														color: 'from-purple-500/20 to-purple-600/20',
-													},
-												].map(method => (
-													<motion.button
-														key={method.id}
-														type='button'
-														onClick={() => setSelectedMethod(method.id)}
-														whileHover={{ scale: 1.02, y: -2 }}
-														whileTap={{ scale: 0.98 }}
-														className={`p-4 rounded-2xl border transition-all text-center ${
-															selectedMethod === method.id
-																? 'border-white/40 bg-gradient-to-br ' +
-																  method.color
-																: 'border-white/20 bg-white/5 hover:border-white/30'
-														}`}
-													>
-														<div className='text-2xl mb-2'>{method.icon}</div>
-														<div className='text-sm font-light text-white'>
-															{method.label}
-														</div>
-													</motion.button>
-												))}
-											</div>
-										</div>
+										+7 905 310 45 08
+									</motion.a>
+									<p className='text-white/70'>
+										Консультация и расчет стоимости бесплатно
+									</p>
+								</div>
 
-										{selectedMethod && (
-											<motion.div
-												initial={{ opacity: 0, y: 20 }}
-												animate={{ opacity: 1, y: 0 }}
-												className='space-y-4'
-											>
-												<label className='block text-sm font-light text-white/80'>
-													{getInputLabel()}
-												</label>
-												{renderInput()}
-											</motion.div>
-										)}
-
-										{error && (
-											<motion.div
-												initial={{ opacity: 0, y: 10 }}
-												animate={{ opacity: 1, y: 0 }}
-												className='bg-red-500/20 border border-red-500/30 rounded-2xl p-4 text-red-300 text-sm'
-											>
-												{error}
-											</motion.div>
-										)}
-
-										<motion.button
-											type='submit'
-											disabled={!selectedMethod || !contactInfo || isLoading}
-											whileHover={
-												selectedMethod && contactInfo && !isLoading
-													? { scale: 1.02, y: -2 }
-													: {}
-											}
-											whileTap={
-												selectedMethod && contactInfo && !isLoading
-													? { scale: 0.98 }
-													: {}
-											}
-											className={`w-full py-5 rounded-full font-medium transition-all ${
-												selectedMethod && contactInfo && !isLoading
-													? 'bg-white text-black hover:bg-gray-100 shadow-[0_8px_32px_rgba(255,255,255,0.3)]'
-													: 'bg-white/20 text-white/50 cursor-not-allowed'
-											}`}
-										>
-											{isLoading ? 'Отправляем...' : 'Отправить заявку'}
-										</motion.button>
-									</form>
-								)}
+								<div className='grid grid-cols-1 sm:grid-cols-2 gap-4'>
+									<motion.a
+										href='https://t.me/alakhmetov5'
+										target='_blank'
+										rel='noopener noreferrer'
+										whileHover={{ scale: 1.02, y: -2 }}
+										whileTap={{ scale: 0.98 }}
+										className='bg-blue-500/20 backdrop-blur-xl text-white px-6 py-4 rounded-2xl font-medium hover:bg-blue-500/30 transition-all border border-blue-500/30'
+									>
+										Написать в Telegram
+									</motion.a>
+									<motion.a
+										href='https://wa.me/79053104508'
+										target='_blank'
+										rel='noopener noreferrer'
+										whileHover={{ scale: 1.02, y: -2 }}
+										whileTap={{ scale: 0.98 }}
+										className='bg-green-500/20 backdrop-blur-xl text-white px-6 py-4 rounded-2xl font-medium hover:bg-green-500/30 transition-all border border-green-500/30'
+									>
+										WhatsApp
+									</motion.a>
+								</div>
 							</motion.div>
 
 							{/* Contact Info & Map */}
@@ -1156,7 +868,7 @@ export default function Home() {
 								{/* Social Links */}
 								<div className='flex space-x-6 text-white/60'>
 									<a
-										href='https://t.me/m_ilya31'
+										href='https://t.me/alakhmetov5'
 										target='_blank'
 										rel='noopener noreferrer'
 										className='hover:text-white transition-colors'
@@ -1164,7 +876,7 @@ export default function Home() {
 										TELEGRAM
 									</a>
 									<a
-										href='https://wa.me/79274394355'
+										href='https://wa.me/79053104508'
 										target='_blank'
 										rel='noopener noreferrer'
 										className='hover:text-white transition-colors'
@@ -1172,7 +884,7 @@ export default function Home() {
 										WHATSAPP
 									</a>
 									<a
-										href='tel:+79274394355'
+										href='tel:+79053104508'
 										className='hover:text-white transition-colors'
 									>
 										ЗВОНОК
@@ -1185,10 +897,10 @@ export default function Home() {
 										КОНТАКТЫ
 									</h3>
 									<a
-										href='tel:+79274394355'
+										href='tel:+79053104508'
 										className='text-2xl md:text-3xl font-light text-white hover:text-white/80 transition-colors'
 									>
-										+7 927 439 43 55
+										+7 905 310 45 08
 									</a>
 								</div>
 
@@ -1258,7 +970,7 @@ export default function Home() {
 							}}
 						>
 							<motion.a
-								href='tel:+79274394355'
+								href='tel:+79053104508'
 								whileHover={{ scale: 1.05 }}
 								whileTap={{ scale: 0.95 }}
 								className='flex items-center space-x-3 bg-white/10 rounded-xl p-3 hover:bg-white/15 transition-all'
@@ -1276,7 +988,7 @@ export default function Home() {
 							</motion.a>
 
 							<motion.a
-								href='https://t.me/m_ilya31'
+								href='https://t.me/alakhmetov5'
 								target='_blank'
 								rel='noopener noreferrer'
 								whileHover={{ scale: 1.05 }}
@@ -1296,7 +1008,7 @@ export default function Home() {
 							</motion.a>
 
 							<motion.a
-								href='https://wa.me/79274394355'
+								href='https://wa.me/79053104508'
 								target='_blank'
 								rel='noopener noreferrer'
 								whileHover={{ scale: 1.05 }}
@@ -1315,47 +1027,7 @@ export default function Home() {
 								<span className='text-white text-sm font-light'>WhatsApp</span>
 							</motion.a>
 
-							<motion.a
-								href='https://vk.com/rehomekz'
-								target='_blank'
-								rel='noopener noreferrer'
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								className='flex items-center space-x-3 bg-white/10 rounded-xl p-3 hover:bg-white/15 transition-all'
-							>
-								<div className='w-8 h-8 bg-blue-700 rounded-full flex items-center justify-center'>
-									<svg
-										className='w-4 h-4 text-white'
-										fill='currentColor'
-										viewBox='0 0 24 24'
-									>
-										<path d='M15.684 0H8.316C1.592 0 0 1.592 0 8.316v7.368C0 22.408 1.592 24 8.316 24h7.368C22.408 24 24 22.408 24 15.684V8.316C24 1.592 22.408 0 15.684 0zm3.692 17.123h-1.744c-.66 0-.862-.525-2.049-1.714-1.033-1.01-1.49-1.135-1.744-1.135-.356 0-.458.102-.458.593v1.575c0 .424-.135.678-1.253.678-1.846 0-3.896-1.118-5.335-3.202C4.624 10.857 4.03 8.57 4.03 8.096c0-.254.102-.491.593-.491h1.744c.441 0 .61.203.78.678.863 2.49 2.303 4.675 2.896 4.675.22 0 .322-.102.322-.66V9.721c-.068-1.186-.695-1.287-.695-1.711 0-.204.17-.407.441-.407h2.744c.373 0 .508.203.508.643v3.473c0 .373.17.508.271.508.22 0 .407-.135.813-.542 1.254-1.406 2.151-3.574 2.151-3.574.119-.254.322-.491.763-.491h1.744c.525 0 .644.271.525.643-.22 1.017-2.354 4.031-2.354 4.031-.186.305-.254.44 0 .763.186.236.796.779 1.203 1.253.745.847 1.32 1.558 1.473 2.05.17.491-.085.744-.576.744z' />
-									</svg>
-								</div>
-								<span className='text-white text-sm font-light'>VKontakte</span>
-							</motion.a>
 
-							<motion.a
-								href='https://t.me/rehomekz'
-								target='_blank'
-								rel='noopener noreferrer'
-								whileHover={{ scale: 1.05 }}
-								whileTap={{ scale: 0.95 }}
-								className='flex items-center space-x-3 bg-white/10 rounded-xl p-3 hover:bg-white/15 transition-all'
-							>
-								<div className='w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center'>
-									<svg
-										className='w-4 h-4 text-white'
-										fill='currentColor'
-										viewBox='0 0 24 24'
-									>
-										<path d='M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.61 7.56c-.12.56-.44.7-.9.44l-2.52-1.86-1.21 1.17c-.14.14-.25.25-.5.25l.18-2.51 4.56-4.12c.2-.18-.04-.28-.3-.1L9.39 13.17l-2.42-.76c-.52-.16-.53-.52.12-.78l9.46-3.64c.43-.16.8.1.66.61z' />
-									</svg>
-								</div>
-								<span className='text-white text-sm font-light'>
-									Telegram канал
-								</span>
-							</motion.a>
 						</motion.div>
 					)}
 

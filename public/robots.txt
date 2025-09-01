@@ -16,7 +16,6 @@ Disallow: /*.json$
 # Разрешаем все остальное
 Allow: /portfolio/
 Allow: /services/
-Allow: /employees/
 Allow: /reviews/
 Allow: /contact/
 Allow: /privacy/

@@ -1,7 +1,7 @@
 {
-	"name": "REHOME - Дизайн интерьера Казань",
-	"short_name": "REHOME",
-	"description": "Студия дизайна интерьера REHOME в Казани. Ремонт квартир под ключ с индивидуальным подходом.",
+	"name": "ПЛАТФОРМА - Ремонт квартир Казань",
+	"short_name": "ПЛАТФОРМА",
+	"description": "Компания ПЛАТФОРМА - качественный ремонт квартир в Казани. Ремонт под ключ с гарантией качества.",
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#000000",
@@ -9,7 +9,7 @@
 	"orientation": "portrait",
 	"scope": "/",
 	"lang": "ru",
-	"categories": ["design", "lifestyle", "business"],
+	"categories": ["construction", "renovation", "business"],
 	"icons": [
 		{
 			"src": "/favicon-16x16.png",
@@ -52,14 +52,14 @@
 		{
 			"name": "Портфолио",
 			"short_name": "Портфолио",
-			"description": "Посмотреть наши работы",
+			"description": "Посмотреть выполненные ремонты",
 			"url": "/portfolio",
 			"icons": [{ "src": "/favicon-192x192.png", "sizes": "192x192" }]
 		},
 		{
 			"name": "Услуги",
 			"short_name": "Услуги",
-			"description": "Наши услуги дизайна",
+			"description": "Услуги ремонта квартир",
 			"url": "/services",
 			"icons": [{ "src": "/favicon-192x192.png", "sizes": "192x192" }]
 		},

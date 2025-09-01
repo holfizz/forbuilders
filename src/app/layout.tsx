@@ -5,14 +5,14 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
-	title: 'REHOME - Дизайн интерьера Казань | Ремонт квартир под ключ Казань',
+	title: 'ПЛАТФОРМА - Ремонт квартир Казань | Качественный ремонт под ключ',
 	description:
-		'Дизайн интерьера в Казани от студии REHOME. Ремонт квартир под ключ, дизайн-проект, 3D визуализация. ✅ Доводим до совершенства ✅ Гарантия качества ✅ Индивидуальный подход',
+		'Качественный ремонт квартир в Казани от компании ПЛАТФОРМА. Ремонт под ключ, профессиональная бригада, гарантия качества. ✅ Соблюдение сроков ✅ Фиксированная цена ✅ Контроль качества',
 	keywords:
-		'дизайн интерьера казань, ремонт квартир казань, дизайн квартир казань, дизайнер интерьера казань, ремонт под ключ казань, дизайн-проект казань, 3д визуализация казань, студия дизайна казань, дизайн комнаты казань, дизайн кухни казань, дизайн спальни казань, дизайн детской казань, современный дизайн казань, элитный ремонт казань',
-	authors: [{ name: 'Макаров Илья Дмитриевич' }],
-	creator: 'REHOME Studio',
-	publisher: 'REHOME Studio',
+		'ремонт квартир казань, ремонт под ключ казань, качественный ремонт казань, строительные работы казань, отделочные работы казань, ремонт комнат казань, ремонт кухни казань, ремонт ванной казань, евроремонт казань, капитальный ремонт казань, косметический ремонт казань, дизайн интерьера казань, дизайн-проект казань, ремонтно-строительные работы казань',
+	authors: [{ name: 'ООО «ПЛАТФОРМА»' }],
+	creator: 'ООО «ПЛАТФОРМА»',
+	publisher: 'ООО «ПЛАТФОРМА»',
 	robots: 'index, follow',
 	viewport: 'width=device-width, initial-scale=1',
 	metadataBase: new URL('https://rehomekz.vercel.app'),
@@ -42,30 +42,30 @@ export const metadata: Metadata = {
 	appleWebApp: {
 		capable: true,
 		statusBarStyle: 'black-translucent',
-		title: 'REHOME - Дизайн интерьера Казань',
+		title: 'ПЛАТФОРМА - Ремонт квартир Казань',
 	},
 	openGraph: {
 		type: 'website',
 		locale: 'ru_RU',
 		url: 'https://rehomekz.vercel.app',
-		title: 'REHOME - Дизайн интерьера и ремонт квартир в Казани',
+		title: 'ПЛАТФОРМА - Качественный ремонт квартир в Казани',
 		description:
-			'Студия дизайна интерьера REHOME в Казани. Создаем уникальные интерьеры квартир и домов. Ремонт под ключ с гарантией качества. Звоните: +7 (927) 439-43-55',
-		siteName: 'REHOME Studio',
+			'Компания ПЛАТФОРМА выполняет качественный ремонт квартир в Казани. Ремонт под ключ с гарантией качества и соблюдением сроков. Звоните: +7 (905) 310-45-08',
+		siteName: 'ООО «ПЛАТФОРМА»',
 		images: [
 			{
 				url: '/assets/case1_ph2.webp',
 				width: 1200,
 				height: 630,
-				alt: 'Дизайн интерьера квартиры в Казани - REHOME Studio',
+				alt: 'Качественный ремонт квартир в Казани - ООО «ПЛАТФОРМА»',
 			},
 		],
 	},
 	twitter: {
 		card: 'summary_large_image',
-		title: 'REHOME - Дизайн интерьера Казань | Ремонт квартир под ключ',
+		title: 'ПЛАТФОРМА - Ремонт квартир Казань | Качественный ремонт под ключ',
 		description:
-			'Профессиональный дизайн интерьера и ремонт квартир в Казани. Индивидуальный подход, качественная реализация.',
+			'Качественный ремонт квартир в Казани. Профессиональная бригада, гарантия качества, соблюдение сроков.',
 		images: ['/assets/case1_ph2.webp'],
 	},
 	other: {
@@ -89,14 +89,14 @@ export default function RootLayout({
 		<html lang='ru'>
 			<head>
 				{/* PWA Meta Tags */}
-				<meta name='application-name' content='REHOME Studio' />
+				<meta name='application-name' content='ООО «ПЛАТФОРМА»' />
 				<meta name='mobile-web-app-capable' content='yes' />
 				<meta name='apple-mobile-web-app-capable' content='yes' />
 				<meta
 					name='apple-mobile-web-app-status-bar-style'
 					content='black-translucent'
 				/>
-				<meta name='apple-mobile-web-app-title' content='REHOME' />
+				<meta name='apple-mobile-web-app-title' content='ПЛАТФОРМА' />
 
 				{/* Microsoft Tiles */}
 				<meta name='msapplication-TileColor' content='#938F91' />

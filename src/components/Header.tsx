@@ -28,10 +28,10 @@ export default function Header() {
 					>
 						<Link href='/' className='flex items-center space-x-4'>
 							<div className='w-10 h-10 bg-white/20 backdrop-blur-xl rounded-2xl flex items-center justify-center border border-white/30 shadow-[inset_0_1px_0_rgba(255,255,255,0.3)]'>
-								<span className='text-white font-light text-lg'>R</span>
+								<span className='text-white font-light text-lg'>П</span>
 							</div>
 							<span className='text-2xl md:text-3xl font-extralight tracking-[0.02em] text-white/95'>
-								REHOME
+								ПЛАТФОРМА
 							</span>
 						</Link>
 					</motion.div>

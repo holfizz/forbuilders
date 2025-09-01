@@ -1,0 +1,476 @@
+'use client'
+
+import { motion } from 'framer-motion'
+import { ArrowLeft, ChevronLeft, ChevronRight, X } from 'lucide-react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
+import { useCallback, useEffect, useState } from 'react'
+import Footer from '../../../components/Footer'
+import Header from '../../../components/Header'
+import { getProjectById } from '../../../data/projects'
+
+const fadeInUp = {
+	initial: { opacity: 0, y: 60 },
+	animate: { opacity: 1, y: 0 },
+	transition: { duration: 0.8, ease: 'easeOut' },
+}
+
+export default function ProjectDetail() {
+	const params = useParams()
+	const projectId = parseInt(params.id as string)
+	const project = getProjectById(projectId)
+
+	const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
+		null
+	)
+
+	const openModal = (index: number) => {
+		setSelectedImageIndex(index)
+		document.body.classList.add('modal-open')
+	}
+
+	const closeModal = useCallback(() => {
+		setSelectedImageIndex(null)
+		document.body.classList.remove('modal-open')
+	}, [])
+
+	const nextImage = useCallback(() => {
+		if (selectedImageIndex !== null && project) {
+			setSelectedImageIndex((selectedImageIndex + 1) % project.images.length)
+		}
+	}, [selectedImageIndex, project])
+
+	const prevImage = useCallback(() => {
+		if (selectedImageIndex !== null && project) {
+			setSelectedImageIndex(
+				selectedImageIndex === 0
+					? project.images.length - 1
+					: selectedImageIndex - 1
+			)
+		}
+	}, [selectedImageIndex, project])
+
+	// Обработка клавиш
+	useEffect(() => {
+		const handleKeyDown = (event: KeyboardEvent) => {
+			if (selectedImageIndex !== null) {
+				switch (event.key) {
+					case 'Escape':
+						closeModal()
+						break
+					case 'ArrowLeft':
+						prevImage()
+						break
+					case 'ArrowRight':
+						nextImage()
+						break
+				}
+			}
+		}
+
+		document.addEventListener('keydown', handleKeyDown)
+		return () => document.removeEventListener('keydown', handleKeyDown)
+	}, [selectedImageIndex, closeModal, nextImage, prevImage])
+
+	// Очистка при размонтировании компонента
+	useEffect(() => {
+		return () => {
+			document.body.classList.remove('modal-open')
+		}
+	}, [])
+
+	if (!project) {
+		return (
+			<div className='min-h-screen bg-black text-white flex items-center justify-center'>
+				<div className='text-center'>
+					<h1 className='text-4xl font-thin mb-4'>Проект не найден</h1>
+					<Link
+						href='/portfolio'
+						className='text-white/70 hover:text-white transition-colors'
+					>
+						← Вернуться к портфолио
+					</Link>
+				</div>
+			</div>
+		)
+	}
+
+	return (
+		<div className='min-h-screen bg-gradient-to-br from-gray-900 via-slate-900 to-black text-white overflow-x-hidden relative'>
+			{/* Background decorative elements */}
+			<div className='absolute inset-0 overflow-hidden pointer-events-none'>
+				{/* Subtle gradient orbs */}
+				<div className='absolute top-0 left-0 w-96 h-96 opacity-8'>
+					<div className='w-full h-full bg-gradient-radial from-blue-500/15 via-purple-500/8 to-transparent rounded-full blur-3xl'></div>
+				</div>
+				<div className='absolute top-1/4 right-0 w-80 h-80 opacity-6'>
+					<div className='w-full h-full bg-gradient-radial from-violet-500/12 via-indigo-500/6 to-transparent rounded-full blur-3xl'></div>
+				</div>
+				<div className='absolute bottom-0 left-1/4 w-72 h-72 opacity-6'>
+					<div className='w-full h-full bg-gradient-radial from-emerald-500/10 via-teal-500/5 to-transparent rounded-full blur-3xl'></div>
+				</div>
+				<div className='absolute bottom-1/3 right-1/3 w-64 h-64 opacity-5'>
+					<div className='w-full h-full bg-gradient-radial from-rose-500/8 via-pink-500/4 to-transparent rounded-full blur-3xl'></div>
+				</div>
+
+				{/* Mesh pattern overlay */}
+				<div
+					className='absolute inset-0 opacity-[0.02]'
+					style={{
+						backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.12) 1px, transparent 0)`,
+						backgroundSize: '56px 56px',
+					}}
+				></div>
+
+				{/* Subtle geometric shapes */}
+				<div className='absolute top-24 right-24 w-28 h-28 opacity-4'>
+					<div className='w-full h-full bg-gradient-to-br from-white/8 to-white/3 rounded-full blur-xl'></div>
+				</div>
+				<div className='absolute bottom-36 left-24 w-20 h-20 opacity-4'>
+					<div className='w-full h-full bg-gradient-to-tl from-white/6 to-white/2 rounded-lg rotate-45 blur-xl'></div>
+				</div>
+			</div>
+
+			<Header />
+
+			{/* Hero Section */}
+			<section className='relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden'>
+				<div className='absolute inset-0'>
+					<Image
+						src={project.image}
+						alt={project.title}
+						fill
+						className='object-cover opacity-30'
+					/>
+					<div className='absolute inset-0 bg-gradient-to-br from-black/90 via-black/70 to-black/90' />
+				</div>
+
+				<div className='relative z-10 container mx-auto px-4 md:px-6'>
+					<Link
+						href='/portfolio'
+						className='inline-flex items-center text-white/70 hover:text-white transition-colors mb-8 group'
+					>
+						<ArrowLeft className='w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform' />
+						Назад к портфолио
+					</Link>
+
+					<motion.div
+						variants={fadeInUp}
+						initial='initial'
+						animate='animate'
+						className='max-w-4xl'
+					>
+						<div className='flex flex-wrap items-center gap-4 mb-6'>
+							<span className='text-sm text-white/60 bg-white/10 px-3 py-1 rounded-full'>
+								{project.year}
+							</span>
+							<span className='text-sm text-white/60 bg-white/10 px-3 py-1 rounded-full'>
+								{project.area}
+							</span>
+							<span className='text-sm text-white/60 bg-white/10 px-3 py-1 rounded-full'>
+								{project.style}
+							</span>
+						</div>
+
+						<h1 className='text-4xl md:text-6xl lg:text-7xl font-thin mb-6 md:mb-8 text-white tracking-[-0.02em]'>
+							{project.title}
+						</h1>
+
+						<p className='text-lg md:text-xl text-white/80 mb-6 leading-relaxed font-light'>
+							{project.location}
+						</p>
+
+						<p className='text-base md:text-lg text-white/70 leading-relaxed font-light max-w-3xl'>
+							{project.fullDescription}
+						</p>
+					</motion.div>
+				</div>
+			</section>
+
+			{/* Project Details */}
+			<section className='py-16 md:py-24'>
+				<div className='container mx-auto px-4 md:px-6'>
+					<div className='grid lg:grid-cols-3 gap-12 md:gap-16 mb-16 md:mb-24'>
+						{/* Project Info */}
+						<motion.div
+							initial={{ opacity: 0, x: -40 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.6 }}
+							viewport={{ once: true }}
+							className='bg-white/5 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10'
+						>
+							<h3 className='text-xl md:text-2xl font-light mb-6 text-white'>
+								Детали проекта
+							</h3>
+							<div className='space-y-4'>
+								<div>
+									<p className='text-sm text-white/60 mb-1'>Клиент</p>
+									<p className='text-white/90'>{project.details.client}</p>
+								</div>
+								<div>
+									<p className='text-sm text-white/60 mb-1'>Длительность</p>
+									<p className='text-white/90'>{project.details.duration}</p>
+								</div>
+								<div>
+									<p className='text-sm text-white/60 mb-1'>Бюджет</p>
+									<p className='text-white/90'>{project.details.budget}</p>
+								</div>
+								<div>
+									<p className='text-sm text-white/60 mb-2'>Команда</p>
+									<div className='space-y-1'>
+										{project.details.team.map((member, index) => (
+											<p key={index} className='text-white/80 text-sm'>
+												• {member}
+											</p>
+										))}
+									</div>
+								</div>
+							</div>
+						</motion.div>
+
+						{/* Challenges */}
+						<motion.div
+							initial={{ opacity: 0, y: 40 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							transition={{ duration: 0.6, delay: 0.1 }}
+							viewport={{ once: true }}
+							className='bg-white/5 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10'
+						>
+							<h3 className='text-xl md:text-2xl font-light mb-6 text-white'>
+								Вызовы
+							</h3>
+							<div className='space-y-3'>
+								{project.challenges.map((challenge, index) => (
+									<p
+										key={index}
+										className='text-white/80 text-sm leading-relaxed'
+									>
+										• {challenge}
+									</p>
+								))}
+							</div>
+						</motion.div>
+
+						{/* Solutions */}
+						<motion.div
+							initial={{ opacity: 0, x: 40 }}
+							whileInView={{ opacity: 1, x: 0 }}
+							transition={{ duration: 0.6, delay: 0.2 }}
+							viewport={{ once: true }}
+							className='bg-white/5 backdrop-blur-xl rounded-2xl p-6 md:p-8 border border-white/10'
+						>
+							<h3 className='text-xl md:text-2xl font-light mb-6 text-white'>
+								Решения
+							</h3>
+							<div className='space-y-3'>
+								{project.solutions.map((solution, index) => (
+									<p
+										key={index}
+										className='text-white/80 text-sm leading-relaxed'
+									>
+										• {solution}
+									</p>
+								))}
+							</div>
+						</motion.div>
+					</div>
+
+					{/* Features */}
+					<motion.div
+						initial={{ opacity: 0, y: 40 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.6 }}
+						viewport={{ once: true }}
+						className='mb-16 md:mb-24'
+					>
+						<h3 className='text-2xl md:text-3xl font-light mb-8 text-white text-center'>
+							Особенности проекта
+						</h3>
+						<div className='grid md:grid-cols-2 gap-4'>
+							{project.features.map((feature, index) => (
+								<motion.div
+									key={index}
+									initial={{ opacity: 0, scale: 0.9 }}
+									whileInView={{ opacity: 1, scale: 1 }}
+									transition={{ duration: 0.4, delay: index * 0.05 }}
+									viewport={{ once: true }}
+									className='bg-white/5 backdrop-blur-xl rounded-xl p-4 border border-white/10 hover:border-white/20 transition-all'
+								>
+									<p className='text-white/90 text-sm leading-relaxed'>
+										• {feature}
+									</p>
+								</motion.div>
+							))}
+						</div>
+					</motion.div>
+				</div>
+			</section>
+
+			{/* Photo Gallery */}
+			<section className='py-16 md:py-24'>
+				<div className='container mx-auto px-4 md:px-6'>
+					<motion.h3
+						initial={{ opacity: 0, y: 40 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.6 }}
+						viewport={{ once: true }}
+						className='text-2xl md:text-3xl font-light mb-12 text-white text-center'
+					>
+						Галерея проекта
+					</motion.h3>
+
+					<div className='grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6'>
+						{project.images.map((image, index) => (
+							<motion.div
+								key={index}
+								initial={{ opacity: 0, scale: 0.9 }}
+								whileInView={{ opacity: 1, scale: 1 }}
+								transition={{ duration: 0.6, delay: index * 0.05 }}
+								viewport={{ once: true }}
+								whileHover={{ scale: 1.02 }}
+								onClick={() => openModal(index)}
+								className='relative overflow-hidden rounded-2xl cursor-pointer group bg-white/5 border border-white/10 hover:border-white/20 transition-all'
+							>
+								<Image
+									src={image}
+									alt={`${project.title} - фото ${index + 1}`}
+									width={400}
+									height={300}
+									className='w-full h-48 md:h-64 object-cover transition-transform duration-700 group-hover:scale-110'
+								/>
+								<div className='absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center'>
+									<div className='w-12 h-12 bg-white/20 backdrop-blur-xl rounded-full flex items-center justify-center border border-white/30'>
+										<span className='text-white text-sm'>↗</span>
+									</div>
+								</div>
+							</motion.div>
+						))}
+					</div>
+				</div>
+			</section>
+
+			{/* Image Modal */}
+			{selectedImageIndex !== null && (
+				<div
+					className='modal-overlay bg-black flex items-center justify-center'
+					onClick={closeModal}
+				>
+					{/* Кнопка закрытия */}
+					<button
+						onClick={closeModal}
+						className='absolute top-4 right-4 w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors z-10'
+					>
+						<X size={24} />
+					</button>
+
+					{/* Изображение (вписывается по максимальной стороне без обрезки) */}
+					<div
+						className='relative w-screen h-screen'
+						onClick={e => {
+							e.stopPropagation()
+							nextImage()
+						}}
+					>
+						<Image
+							src={project.images[selectedImageIndex]}
+							alt={`${project.title} - фото ${selectedImageIndex + 1}`}
+							fill
+							sizes='100vw'
+							className='object-contain cursor-pointer'
+							priority
+						/>
+					</div>
+
+					{/* Навигация снизу */}
+					{project.images.length > 1 && (
+						<div className='absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-4 z-10'>
+							{/* Навигация влево */}
+							<button
+								onClick={e => {
+									e.stopPropagation()
+									prevImage()
+								}}
+								className='w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors'
+							>
+								<ChevronLeft size={24} />
+							</button>
+
+							{/* Счетчик */}
+							<div className='bg-white/20 rounded-full px-4 py-2'>
+								<span className='text-white text-sm'>
+									{selectedImageIndex + 1} / {project.images.length}
+								</span>
+							</div>
+
+							{/* Навигация вправо */}
+							<button
+								onClick={e => {
+									e.stopPropagation()
+									nextImage()
+								}}
+								className='w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-colors'
+							>
+								<ChevronRight size={24} />
+							</button>
+						</div>
+					)}
+
+					{/* Счетчик для одиночного изображения */}
+					{project.images.length === 1 && (
+						<div className='absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/20 rounded-full px-4 py-2'>
+							<span className='text-white text-sm'>1 / 1</span>
+						</div>
+					)}
+				</div>
+			)}
+
+			{/* CTA Section */}
+			<section className='py-16 md:py-24 relative'>
+				<div className='absolute inset-0 bg-gradient-to-br from-gray-800 via-neutral-800 to-stone-800' />
+
+				<div className='container mx-auto px-4 md:px-6 relative z-10'>
+					<motion.div
+						initial={{ opacity: 0, y: 60 }}
+						whileInView={{ opacity: 1, y: 0 }}
+						transition={{ duration: 0.8 }}
+						viewport={{ once: true }}
+						className='text-center max-w-4xl mx-auto'
+					>
+						<h2 className='text-3xl md:text-5xl lg:text-6xl font-thin mb-6 md:mb-8 text-white tracking-[-0.02em]'>
+							Хотите такой же проект?
+						</h2>
+						<p className='text-base md:text-lg text-white/80 mb-8 md:mb-12 leading-relaxed font-light'>
+							Обсудим ваши идеи и создадим уникальное пространство специально
+							для вас
+						</p>
+
+						<div className='flex flex-col sm:flex-row gap-4 md:gap-6 justify-center items-center'>
+							<motion.a
+								href='/contact'
+								whileHover={{ scale: 1.02, y: -2 }}
+								whileTap={{ scale: 0.98 }}
+								transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+								className='bg-white text-black px-6 md:px-8 py-3 md:py-4 rounded-full font-medium text-sm md:text-base hover:bg-gray-100 transition-all shadow-[0_8px_32px_rgba(255,255,255,0.3)] w-full sm:w-auto text-center'
+							>
+								Начать проект
+							</motion.a>
+							<motion.a
+								href='/contact'
+								whileHover={{ scale: 1.02, y: -2 }}
+								whileTap={{ scale: 0.98 }}
+								transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+								className='bg-white/10 backdrop-blur-xl text-white px-6 md:px-8 py-3 md:py-4 rounded-full font-light text-sm md:text-base border border-white/20 hover:bg-white/15 hover:border-white/30 transition-all w-full sm:w-auto text-center'
+							>
+								Обсудить проект
+							</motion.a>
+						</div>
+					</motion.div>
+				</div>
+			</section>
+
+			{/* Footer */}
+			<Footer />
+		</div>
+	)
+}

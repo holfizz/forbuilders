@@ -346,27 +346,6 @@ export default function Home() {
 							</motion.div>
 						</div>
 
-						{/* Solution Intro */}
-						<motion.div
-							initial={{ opacity: 0, y: 40 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							transition={{ duration: 0.8, delay: 0.5 }}
-							viewport={{ once: true }}
-							className='text-center mb-16 md:mb-24'
-						>
-							<h3 className='text-4xl md:text-5xl font-light mb-8 text-white'>
-								А что если сделать ремонт правильно?
-							</h3>
-							<p className='text-lg text-white/80 leading-relaxed mb-4'>
-								Студия PLATFORM контролирует весь процесс ремонта
-							</p>
-							<p className='text-base text-white/60 leading-relaxed max-w-2xl mx-auto'>
-								Мы не просто рисуем проекты, а воплощаем их в жизнь с гарантией
-								качества на каждом этапе
-							</p>
-						</motion.div>
-
-						{/* Solutions */}
 						<div className='space-y-8 mb-16 md:mb-24'>
 							{/* Solution 1 */}
 							<motion.div

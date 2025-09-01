@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import React from 'react'
 import Footer from '../../components/Footer'
 import Header from '../../components/Header'
 
@@ -19,9 +18,6 @@ const scaleIn = {
 }
 
 export default function Contact() {
-
-
-
 	return (
 		<div
 			className='min-h-screen bg-black text-white overflow-x-hidden'
@@ -111,9 +107,7 @@ export default function Contact() {
 							>
 								+7 905 310 45 08
 							</motion.a>
-							<p className='text-white/70 text-sm'>
-								Звоните в любое время
-							</p>
+							<p className='text-white/70 text-sm'>Звоните в любое время</p>
 						</motion.div>
 
 						{/* WhatsApp */}
@@ -163,9 +157,7 @@ export default function Contact() {
 							>
 								Написать в Telegram
 							</motion.a>
-							<p className='text-white/70 text-sm'>
-								@alakhmetov5
-							</p>
+							<p className='text-white/70 text-sm'>@alakhmetov5</p>
 						</motion.div>
 					</div>
 				</div>

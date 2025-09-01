@@ -90,8 +90,6 @@ export default function Home() {
 	// Chat widget state
 	const [isChatOpen, setIsChatOpen] = useState(false)
 
-
-
 	return (
 		<>
 			<Head>
@@ -112,8 +110,6 @@ export default function Home() {
 					overflowY: 'auto',
 				}}
 			>
-
-
 				<Header />
 
 				{/* Hero Section */}
@@ -810,15 +806,13 @@ export default function Home() {
 								className='bg-white/5 backdrop-blur-3xl rounded-[2rem] border border-white/20 p-8 md:p-12 shadow-[0_8px_32px_rgba(255,255,255,0.1)] text-center'
 							>
 								<div className='w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl flex items-center justify-center mb-8 mx-auto shadow-lg'>
-									<span className='text-3xl font-light text-white'>
-										📞
-									</span>
+									<span className='text-3xl font-light text-white'>📞</span>
 								</div>
 
 								<h3 className='text-2xl md:text-3xl font-light mb-6 text-white'>
 									Звоните прямо сейчас
 								</h3>
-								
+
 								<div className='mb-8'>
 									<motion.a
 										href='tel:+79053104508'
@@ -1026,8 +1020,6 @@ export default function Home() {
 								</div>
 								<span className='text-white text-sm font-light'>WhatsApp</span>
 							</motion.a>
-
-
 						</motion.div>
 					)}
 
